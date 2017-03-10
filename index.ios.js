@@ -23,7 +23,7 @@ export default class bosszp extends Component {
           To get started, edit index.ios.js
         </Text>
         <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
+          Press1111 Cmd+R to reload,{'\n'}
           Cmd+D or shake for dev menu
         </Text>
       </View>
