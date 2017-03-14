@@ -4,10 +4,11 @@ import React, {
 } from 'react';
 import {
   StyleSheet,
+  View
 } from 'react-native';
 import { connect } from 'react-redux';
 
-class T extends Component {
+class CompanyListView extends Component {
   constructor() {
     super();
     this.state = {  };
@@ -21,10 +22,11 @@ class T extends Component {
 
   render() {
       return (
+        <View >
+        </View >
       );
     }
   }
-}
 
 var styles = StyleSheet.create({
   button: {
@@ -33,4 +35,4 @@ var styles = StyleSheet.create({
   }
 });
 
-module.exports = connect()(t);
+module.exports = connect()(CompanyListView);

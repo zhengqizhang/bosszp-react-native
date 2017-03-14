@@ -11,6 +11,7 @@
     "react-native": "^0.42.0",
     "react-native-code-push": "^1.17.2-beta",
     "react-native-jpush": "^1.0.9",
+    "react-native-root-modal": "^1.0.8",
     "react-native-scrollable-tab-view": "^0.7.2",
     "react-native-splash-screen": "^2.0.0",
     "react-native-tab-navigator": "^0.3.3",

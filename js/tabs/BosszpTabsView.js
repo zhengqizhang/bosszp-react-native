@@ -10,6 +10,7 @@ import {
 import { connect } from 'react-redux';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import TabNavigator from 'react-native-tab-navigator';
+import CompanyListView from './company/CompanyListView';
 
 class BosszpTabsView extends Component{
   constructor() {
@@ -19,7 +20,7 @@ class BosszpTabsView extends Component{
     };
     this.tabNames = [
       ["Main", require('../common/img/tab_main.png'), require('../common/img/tab_main_s.png'), "Main", <View {...this.props}/>],
-      ["Company", require('../common/img/tab_company.png'), require('../common/img/tab_company_s.png'),  "Company", <View {...this.props}/>],
+      ["Company", require('../common/img/tab_company.png'), require('../common/img/tab_company_s.png'),  "Company", <CompanyListView {...this.props}/>],
       ["Contact", require('../common/img/tab_contact.png'), require('../common/img/tab_contact_s.png'), "Contact", <View {...this.props}/>],
       ["Person", require('../common/img/tab_person.png'), require('../common/img/tab_person_s.png'), "Person", <View {...this.props}/>]
     ]

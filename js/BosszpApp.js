@@ -54,15 +54,12 @@ class BosszpApp extends Component{
 
   render() {
     return (
-      <View style={styles.container}>
         <View style={styles.container}>
           <StatusBar
-            translucent={true}
-            backgroundColor="rgba(0, 0, 0, .2)"
+            barStyle="light-content"
            />
           <BosszpNavigation />
         </View>
-      </View>
     );
   }
 }
@@ -71,6 +68,7 @@ class BosszpApp extends Component{
 var styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'rgb(233,239,239)'
   },
 });
 
