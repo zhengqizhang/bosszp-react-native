@@ -8,7 +8,8 @@ import {
   ListView,
   Text,
   Image,
-  RefreshControl
+  RefreshControl,
+  TouchableWithoutFeedback
 } from 'react-native';
 import { connect } from 'react-redux';
 
@@ -49,21 +50,30 @@ class CompanyListView extends Component {
 
     renderCompany(company){
       return (
-        <View style={styles.companyCard}>
-            <View>
-                <Image style={styles.companyLogo} source={{uri:company.logo}} />
-            </View>
-            <View style={styles.rightItem}>
-                <Text style={styles.name}>{company.name}</Text>
-                <Text style={styles.location}>{company.location}</Text>
-                <Text style={styles.location}>{company.type}</Text>
-                <View style={styles.line}/>
-                <Text style={styles.hot}> 热招：
-                    <Text style={styles.position}> {company.hot.position}</Text>
-                等{company.hot.number}个职位</Text>
-            </View>
-        </View>
+        <TouchableWithoutFeedback onPress={()=>this.openCompany(company.id)}>
+          <View style={styles.companyCard}>
+              <View>
+                  <Image style={styles.companyLogo} source={{uri:company.logo}} />
+              </View>
+              <View style={styles.rightItem}>
+                  <Text style={styles.name}>{company.name}</Text>
+                  <Text style={styles.location}>{company.location}</Text>
+                  <Text style={styles.location}>{company.type}</Text>
+                  <View style={styles.line}/>
+                  <Text style={styles.hot}> 热招：
+                      <Text style={styles.position}> {company.hot.position}</Text>
+                  等{company.hot.number}个职位</Text>
+              </View>
+          </View>
+        </TouchableWithoutFeedback>
       )
+    }
+
+    openCompany(id){
+      this.props.navigator.push({
+        name: 'companyDetail',
+        id
+      })
     }
   }
 
@@ -98,11 +108,11 @@ var styles = StyleSheet.create({
   },
   name: {
     fontSize: 16,
-    marginBottom: 8
+    marginBottom: 12
   },
   location: {
     color: 'rgb(103,103,103)',
-    marginBottom: 8
+    marginBottom: 12
   },
   hot: {
     color: 'rgb(163,163,163)',

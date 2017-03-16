@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 
-class CompanyProfileView extends Component {
+class ToolBar extends Component {
   constructor() {
     super();
     this.state = {  };
@@ -35,4 +35,4 @@ var styles = StyleSheet.create({
   }
 });
 
-export default connect()(CompanyProfileView);
+export default connect()(ToolBar);

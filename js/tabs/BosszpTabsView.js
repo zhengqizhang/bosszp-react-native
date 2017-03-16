@@ -13,8 +13,8 @@ import TabNavigator from 'react-native-tab-navigator';
 import CompanyListView from './company/CompanyListView';
 
 class BosszpTabsView extends Component{
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       selectedTab: 'Company',
     };
@@ -34,7 +34,6 @@ class BosszpTabsView extends Component{
 
   render() {
       let tabBarHeight = 50;
-      let a = '../common/img/tab_company.png';
       return (
         <TabNavigator
           tabBarStyle={{ height: tabBarHeight, overflow: 'hidden', borderTopWidth: 1, borderColor: 'rgb(185,185,185)' }}

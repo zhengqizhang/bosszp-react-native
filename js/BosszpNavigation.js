@@ -14,6 +14,7 @@ import {
 import { connect } from 'react-redux';
 
 import BosszpTabsView from './tabs/BosszpTabsView';
+import CompanyDetailView from './tabs/company/CompanyDetailView';
 
 class BosszpNavigator extends Component{
   constructor(props){
@@ -23,7 +24,8 @@ class BosszpNavigator extends Component{
   renderScene( route, navigator ){
     let cp;
     switch ( route.name ) {
-      case 'star': {
+      case 'companyDetail': {
+        cp = <CompanyDetailView navigator={navigator} />
       }
       break;
       default: {
@@ -34,18 +36,16 @@ class BosszpNavigator extends Component{
   }
 
   render() {
-    console.log(typeof BosszpTabsView);
         return (
           <View style={styles.container}>
             <Navigator
               ref="navigator"
               style={styles.container}
               configureScene={(route) => {
-                return Navigator.SceneConfigs.FloatFromBottomAndroid;
-                if (route.name === "login" || route.name === "myresume" ) {
-                  return Navigator.SceneConfigs.FloatFromBottomAndroid;
+                if (route.name === "companyDetail" || route.name === "myresume" ) {
+                  return Navigator.SceneConfigs.PushFromRight;
                 } else {
-                  return Navigator.SceneConfigs.FloatFromRight;
+                  return Navigator.SceneConfigs.PushFromRight;
                 }
               }}
               initialRoute={{}}
