@@ -25,10 +25,10 @@ class CompanyDetailView extends Component {
     super();
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      profileData: ds.cloneWithRows([data.companyLists[0].profile]),
-      hotPositionData: ds.cloneWithRows([data.companyLists[0].hotPosition.types,...data.companyLists[0].hotPosition.positions]),
+      profileData: data.companyLists[0].profile,
+      hotPositionData: data.companyLists[0].hotPosition,
       selectedTab: "profile",
-      fadAnim: new Animated.Value(1),
+      fadAnim: new Animated.Value(0),
     };
   }
 
@@ -40,89 +40,116 @@ class CompanyDetailView extends Component {
 
   render() {
       return (
-        <ScrollView style={styles.container}>
+        <View style={styles.container}>
           <Animated.View style={[styles.header,{opacity: this.state.fadAnim}]}>
-
+              <Text style={styles.headerTitle}> 映客直播 </Text>
           </Animated.View>
-          {
-            this.state.selectedTab === "profile" ? (
-              <ListView
-                dataSource={this.state.profileData}
-                renderHeader={()=>this.renderHeader()}
-                renderRow={(profile) => <CompanyProfileView profile={profile}/>}
-              />
-            ) : (
-              <ListView
-                dataSource={this.state.hotPositionData}
-                renderHeader={()=>this.renderHeader()}
-                renderRow={(position) => <HotPositionView position={position}/>}
-              />
-            )
-          }
+          <ScrollView style={styles.container} onScroll={(e)=>this._pageScroll(e)} scrollEventThrottle={200}>
+              <Carousel
+                delay={2000}
+                style={styles.carousel}
+                autoplay
+                pageInfo
+                onAnimateNextPage={(p) => p = 1}
+              >
+              {
+                [1,2].map((item,i)=>{
+                  return (
+                    <Image
+                      key={i}
+                      style={{flex: 1}}
+                      source={{uri: 'https://www.lgstatic.com/thumbnail_300x300/i/image/M00/08/49/Cgp3O1bPycGAMj0hAAAgshBCvv4840.jpg'}}
+                    />
+                  )
+                })
+              }
+              </Carousel>
+              <View style={styles.companyInfo}>
+                  <Image
+                    source={{uri:data.companyLists[0].logo}}
+                    style={styles.companyLogo}/>
+                  <View style={styles.companyInfoText}>
+                      <Text style={styles.name}>映客直播</Text>
+                      <Text style={styles.type}> 移动换联网    B轮    500-999人</Text>
+                  </View>
+              </View>
+              <View style={styles.tabNavigator} ref={(tabNavigator)=>{this.tabNavigator=tabNavigator}}>
+                 <TouchableWithoutFeedback onPress={()=>{
+                   this.setState({
+                     selectedTab: 'profile'
+                   })
+                 }}>
+                   <View>
+                     <Text style={this.state.selectedTab === "profile" ? styles.selectedTitleStyle : styles.titleStyle }>
+                       公司概况
+                     </Text>
+                   </View>
+                 </TouchableWithoutFeedback>
+                 <TouchableWithoutFeedback onPress={()=>{
+                   this.setState({
+                     selectedTab: 'hot'
+                   })
+                 }}>
+                   <View>
+                     <Text style={this.state.selectedTab === "hot" ? styles.selectedTitleStyle : styles.titleStyle }>
+                       热招职位（98）
+                     </Text>
+                   </View>
+                 </TouchableWithoutFeedback>
+              </View>
+              {
+                this.state.selectedTab === "profile" ? <CompanyProfileView profile={this.state.profileData}/> : <HotPositionView hotPosition={this.state.hotPositionData}/>
+              }
+          </ScrollView>
           <TouchableWithoutFeedback onPress={()=>this.back()}>
             <Icon size={36} name={'ios-arrow-dropleft-outline'} color="rgb(168,168,168)" style={styles.backButton}/>
           </TouchableWithoutFeedback>
-        </ScrollView>
+          <View style={styles.fixedTabNavigator} ref={(fixedTabNavigator)=>{this.fixedTabNavigator=fixedTabNavigator}}>
+             <TouchableWithoutFeedback onPress={()=>{
+               this.setState({
+                 selectedTab: 'profile'
+               })
+             }}>
+               <View>
+                 <Text style={this.state.selectedTab === "profile" ? styles.selectedTitleStyle : styles.titleStyle }>
+                   公司概况
+                 </Text>
+               </View>
+             </TouchableWithoutFeedback>
+             <TouchableWithoutFeedback onPress={()=>{
+               this.setState({
+                 selectedTab: 'hot'
+               })
+             }}>
+               <View>
+                 <Text style={this.state.selectedTab === "hot" ? styles.selectedTitleStyle : styles.titleStyle }>
+                   热招职位（98）
+                 </Text>
+               </View>
+             </TouchableWithoutFeedback>
+          </View>
+        </View>
       );
     }
 
-    renderHeader(){
-       return (
-         <View>
-           <Carousel
-             delay={2000}
-             style={styles.carousel}
-             autoplay
-             pageInfo
-             onAnimateNextPage={(p) => p = 1}
-           >
-           {
-             [1,2].map((item,i)=>{
-               return (
-                 <Image
-                   key={i}
-                   style={{flex: 1}}
-                   source={{uri: 'https://www.lgstatic.com/thumbnail_300x300/i/image/M00/08/49/Cgp3O1bPycGAMj0hAAAgshBCvv4840.jpg'}}
-                 />
-               )
-             })
-           }
-           </Carousel>
-           <View style={styles.companyInfo}>
-               <Image
-                 source={{uri:data.companyLists[0].logo}}
-                 style={styles.companyLogo}/>
-               <View style={styles.companyInfoText}>
-                   <Text style={styles.name}>映客直播</Text>
-                   <Text style={styles.type}> 移动换联网    B轮    500-999人</Text>
-               </View>
-           </View>
-           <View style={styles.tabNavigator}>
-              <TouchableWithoutFeedback onPress={()=>{
-                this.setState({
-                  selectedTab: 'profile'
-                })
-              }}>
-                <View>
-                  <Text style={this.state.selectedTab === "profile" ? styles.selectedTitleStyle : styles.titleStyle }>
-                    公司概况
-                  </Text>
-                </View>
-              </TouchableWithoutFeedback>
-              <TouchableWithoutFeedback onPress={()=>{
-                this.setState({
-                  selectedTab: 'hot'
-                })
-              }}>
-                <View>
-                  <Text style={this.state.selectedTab === "hot" ? styles.selectedTitleStyle : styles.titleStyle }>
-                    热招职位（98）
-                  </Text>
-                </View>
-              </TouchableWithoutFeedback>
-           </View>
-         </View>
-       )
+    _pageScroll(event){
+        let inset = event.nativeEvent.contentInset;
+        let offset = event.nativeEvent.contentOffset;
+        if(offset.y <= 220 && offset.y >= 0){
+            let opacity = offset.y/220;
+            this.state.fadAnim.setValue(opacity);
+            this.fixedTabNavigator.setNativeProps({style:{top:-500}});
+        }else if(offset.y > 220){
+            this.state.fadAnim.setValue(1);
+            // this.setState({headerTitle:_commentListView.getHeaderTitle()});
+            this.tabNavigator.measure((x,y,width,height,pageX,pageY)=>{
+                if(pageY < 62 ){
+                    this.fixedTabNavigator.setNativeProps({style:{top:62}});
+                }else{
+                    this.fixedTabNavigator.setNativeProps({style:{top:-500}});
+                }
+            });
+        }
     }
 
     back(){
@@ -206,7 +233,25 @@ var styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    zIndex: 1
+    zIndex: 1,
+    overflow: 'hidden'
+  },
+  headerTitle: {
+    textAlign: 'center',
+    lineHeight: 80,
+    fontSize: 16,
+    color: '#FFF'
+  },
+  fixedTabNavigator: {
+    backgroundColor: '#FFF',
+    height: 50,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    borderTopWidth: 1,
+    borderColor: 'rgb(201,201,201)',
+    position: "absolute",
+    left: 0,
+    right: 0
   }
 });
 
