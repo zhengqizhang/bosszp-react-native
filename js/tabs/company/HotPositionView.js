@@ -7,7 +7,8 @@ import {
   View,
   ListView,
   TouchableWithoutFeedback,
-  Text
+  Text,
+  Image
 } from 'react-native';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -73,29 +74,37 @@ class HotPositionView extends Component {
 
   renderHotPosition(position){
     return (
-      <View style={styles.positionItem}>
-        <View style={styles.infoBox}>
-          <Text style={styles.name}>{position.position}</Text>
-          <Text style={styles.salary}>{position.salary}</Text>
+      <TouchableWithoutFeedback onPress={()=>this.showPositionDetail()}>
+        <View style={styles.positionItem}>
+          <View style={styles.infoBox}>
+            <Text style={styles.name}>{position.position}</Text>
+            <Text style={styles.salary}>{position.salary}</Text>
+          </View>
+          <View style={styles.mainInfo}>
+              <Icon name="ios-pin-outline" size={12} color="rgb(140,140,140)">
+                <Text> 北京 朝阳区 望京 </Text>
+              </Icon>
+              <Icon name="ios-pin-outline" size={12} color="rgb(140,140,140)">
+                <Text> 3-5 年</Text>
+              </Icon>
+              <Icon name="ios-pin-outline" size={12} color="rgb(140,140,140)">
+                <Text> 本科 </Text>
+              </Icon>
+          </View>
+          <View style={styles.publisher}>
+              <Image style={styles.publisherAvatar} source={{uri:"https://tva2.sinaimg.cn/crop.0.0.512.512.180/66134906jw8fcgvur5rxyj20e80e80tb.jpg"}} />
+              <Text style={styles.publisherName}>  马云 |</Text>
+              <Text style={styles.publisherPost}>  招聘负责人</Text>
+          </View>
         </View>
-        <View style={styles.mainInfo}>
-            <Icon name="ios-pin-outline" size={12} color="rgb(140,140,140)">
-              <Text> 北京 朝阳区 望京 </Text>
-            </Icon>
-            <Icon name="ios-pin-outline" size={12} color="rgb(140,140,140)">
-              <Text> 3-5 年</Text>
-            </Icon>
-            <Icon name="ios-pin-outline" size={12} color="rgb(140,140,140)">
-              <Text> 本科 </Text>
-            </Icon>
-        </View>
-        <View style={styles.publisher}>
-            <View style={styles.publisherAvatar}/>
-            <Text style={styles.publisherName}>  马云 |</Text>
-            <Text style={styles.publisherPost}>  招聘负责人</Text>
-        </View>
-      </View>
+      </TouchableWithoutFeedback>
     )
+  }
+
+  showPositionDetail(){
+    this.props.navigator.push({
+      name: "positionDetail"
+    })
   }
 }
 

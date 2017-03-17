@@ -10,7 +10,8 @@ import {
   ListView,
   TouchableWithoutFeedback,
   ScrollView,
-  Animated
+  Animated,
+  RefreshControl
 } from 'react-native';
 import { connect } from 'react-redux';
 import Carousel from 'react-native-looped-carousel';
@@ -19,6 +20,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import data from '../../data';
 import CompanyProfileView from './CompanyProfileView';
 import HotPositionView from './HotPositionView';
+import LoadingView from '../../common/LoadingView';
 
 class CompanyDetailView extends Component {
   constructor() {
@@ -29,16 +31,25 @@ class CompanyDetailView extends Component {
       hotPositionData: data.companyLists[0].hotPosition,
       selectedTab: "profile",
       fadAnim: new Animated.Value(0),
+      isLoading: true
     };
   }
 
   componentDidMount() {
+    setTimeout(()=>{
+      this.setState({
+        isLoading: false
+      })
+    },1000)
   }
 
   componentWillUnmount() {
   }
 
   render() {
+      if(this.state.isLoading){
+        return <LoadingView />
+      }
       return (
         <View style={styles.container}>
           <Animated.View style={[styles.header,{opacity: this.state.fadAnim}]}>
@@ -98,7 +109,7 @@ class CompanyDetailView extends Component {
                  </TouchableWithoutFeedback>
               </View>
               {
-                this.state.selectedTab === "profile" ? <CompanyProfileView profile={this.state.profileData}/> : <HotPositionView hotPosition={this.state.hotPositionData}/>
+                this.state.selectedTab === "profile" ? <CompanyProfileView profile={this.state.profileData}/> : <HotPositionView navigator={this.props.navigator} hotPosition={this.state.hotPositionData}/>
               }
           </ScrollView>
           <TouchableWithoutFeedback onPress={()=>this.back()}>
@@ -251,7 +262,8 @@ var styles = StyleSheet.create({
     borderColor: 'rgb(201,201,201)',
     position: "absolute",
     left: 0,
-    right: 0
+    right: 0,
+    top: -500
   }
 });
 

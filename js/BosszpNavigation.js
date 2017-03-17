@@ -15,6 +15,7 @@ import { connect } from 'react-redux';
 
 import BosszpTabsView from './tabs/BosszpTabsView';
 import CompanyDetailView from './tabs/company/CompanyDetailView';
+import PositionDetailView from './tabs/main/PositionDetailView';
 
 class BosszpNavigator extends Component{
   constructor(props){
@@ -26,6 +27,10 @@ class BosszpNavigator extends Component{
     switch ( route.name ) {
       case 'companyDetail': {
         cp = <CompanyDetailView navigator={navigator} />
+      }
+      break;
+      case 'positionDetail': {
+        cp = <PositionDetailView navigator={navigator} />
       }
       break;
       default: {

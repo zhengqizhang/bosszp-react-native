@@ -22,6 +22,7 @@ class CompanyListView extends Component {
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
       dataSource: ds.cloneWithRows(data.companyLists),
+      refreshing: false
     };
   }
 
@@ -42,6 +43,12 @@ class CompanyListView extends Component {
           <ListView
             style={styles.listview}
             dataSource={this.state.dataSource}
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.refreshing}
+                onRefresh={()=>this._onRefresh()}
+              />
+            }
             renderRow={(company)=>this.renderCompany(company)}
           />
         </View>
@@ -74,6 +81,10 @@ class CompanyListView extends Component {
         name: 'companyDetail',
         id
       })
+    }
+
+    _onRefresh(){
+
     }
   }
 
